@@ -9,7 +9,6 @@ export default function ProgrammingLoader() {
     const [dots, setDots] = useState("")
 
     const loadingSteps = [
-        "Initializing system...",
         "Loading modules...",
         "Connecting to server...",
         "Authenticating user...",

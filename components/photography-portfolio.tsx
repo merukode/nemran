@@ -158,7 +158,7 @@ export default function PhotographyPortfolio() {
                         {/* Main Title */}
                         <div className="space-y-6">
                             <motion.h1
-                                className="text-8xl md:text-9xl font-black leading-none tracking-tighter text-black"
+                                className="text-6xl md:text-8xl font-black leading-none tracking-tighter text-black"
                                 initial={{ y: 30, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.5, duration: 0.8 }}
@@ -184,29 +184,10 @@ export default function PhotographyPortfolio() {
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: 0.9, duration: 0.8 }}
                         >
-                            Capturing moments that matter, one frame at a time.
+                            Casual Photographer.
                             <br />
-                            Based in Indonesia
+                            Shooting Whatever Looks Mildly Interesting
                         </motion.p>
-
-                        {/* Floating Elements */}
-                        <motion.div
-                            className="absolute top-32 left-32 text-gray-400 font-light text-lg"
-                            initial={{ x: -50, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ delay: 1.2, duration: 0.8 }}
-                        >
-                            since 2019
-                        </motion.div>
-
-                        <motion.div
-                            className="absolute top-1/2 right-32 text-gray-400 font-light text-lg"
-                            initial={{ x: 50, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ delay: 1.4, duration: 0.8 }}
-                        >
-                            available
-                        </motion.div>
                     </motion.div>
                 </div>
             </section>
@@ -254,35 +235,11 @@ export default function PhotographyPortfolio() {
                                 <h3 className="text-4xl font-black tracking-tight">About</h3>
                                 <div className="w-16 h-1 bg-black" />
                                 <p className="text-lg leading-relaxed text-gray-700">
-                                    I'm a photographer based in Tokyo, specializing in street photography, portraits, and architectural
-                                    studies. My work focuses on capturing authentic moments and the beauty found in everyday life.
+                                    just someone who likes taking random photos of stuff that looks mildly interesting.
                                 </p>
                                 <p className="text-lg leading-relaxed text-gray-600">
-                                    With over 5 years of experience, I've had the privilege of working with clients across the globe,
-                                    documenting stories that matter and creating images that resonate.
+                                    sometimes it’s a street, sometimes it’s a lonely bench. Most of the time, it’s something no one else noticed (or wanted to).
                                 </p>
-                            </motion.div>
-
-                            {/* Stats */}
-                            <motion.div
-                                className="grid grid-cols-3 gap-8"
-                                initial={{ y: 30, opacity: 0 }}
-                                whileInView={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.5, duration: 0.8 }}
-                                viewport={{ once: true }}
-                            >
-                                <div className="text-center">
-                                    <div className="text-3xl font-black text-black">500+</div>
-                                    <div className="text-sm font-mono text-gray-500 uppercase tracking-wider">Projects</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-3xl font-black text-black">25+</div>
-                                    <div className="text-sm font-mono text-gray-500 uppercase tracking-wider">Countries</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-3xl font-black text-black">5+</div>
-                                    <div className="text-sm font-mono text-gray-500 uppercase tracking-wider">Years</div>
-                                </div>
                             </motion.div>
                         </div>
                     </motion.div>
@@ -300,10 +257,10 @@ export default function PhotographyPortfolio() {
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-6xl md:text-7xl font-black tracking-tight mb-6">Selected Works</h2>
+                        <h2 className="text-6xl md:text-7xl font-black tracking-tight mb-6">Stuff I Shot</h2>
                         <div className="w-20 h-1 bg-black mx-auto mb-6" />
                         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                            A curated selection of my recent photography work, spanning different genres and locations.
+                            A bunch of pics i liked enough not to delete.
                         </p>
                     </motion.div>
 
@@ -363,7 +320,7 @@ export default function PhotographyPortfolio() {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            View All Work
+                            View All Shots
                         </motion.button>
                     </motion.div>
                 </div>
@@ -379,10 +336,6 @@ export default function PhotographyPortfolio() {
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-5xl md:text-6xl font-black">Let's Work Together</h2>
-                        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                            Available for commissions, collaborations, and creative projects worldwide.
-                        </p>
                         <div className="flex flex-col sm:flex-row gap-6 justify-center">
                             <motion.a
                                 href="mailto:alex@example.com"

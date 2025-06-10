@@ -10,7 +10,7 @@ export default function PhotographyLoader() {
         // Camera shutter animation sequence
         const timer = setTimeout(() => {
             setShutterOpen(true)
-        }, 500)
+        }, 1000)
 
         return () => clearTimeout(timer)
     }, [])

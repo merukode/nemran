@@ -5,8 +5,7 @@ import type React from "react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useState, useEffect, useRef } from "react"
 import { Github, ExternalLink, Zap, Star, ThumbsUp, Terminal, Code, Cpu } from "lucide-react"
-import ProjectDetail from "./project-detail"
-
+import ProjectDetail from "@/components/project-detail"
 export default function ProgrammerPortfolio() {
     const [currentTime, setCurrentTime] = useState(new Date())
     const [selectedProject, setSelectedProject] = useState<string | null>(null)

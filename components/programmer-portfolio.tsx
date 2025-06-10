@@ -4,8 +4,8 @@ import type React from "react"
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useState, useEffect, useRef } from "react"
-import { Github, ExternalLink, Zap, Star, ThumbsUp, Terminal, Code, Cpu } from "lucide-react"
-import ProjectDetail from "./project-detail"
+import { Github, ExternalLink, Zap, Terminal, Code, Cpu } from "lucide-react"
+import ProgrammingProjectDetail from "./programming-project-detail"
 
 export default function ProgrammerPortfolio() {
     const [currentTime, setCurrentTime] = useState(new Date())
@@ -18,6 +18,7 @@ export default function ProgrammerPortfolio() {
     const projectsSectionRef = useRef<HTMLDivElement>(null)
     const projectsContainerRef = useRef<HTMLDivElement>(null)
     const [isTerminalReady, setIsTerminalReady] = useState(false)
+    const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null)
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -33,17 +34,6 @@ export default function ProgrammerPortfolio() {
     const y1 = useTransform(scrollYProgress, [0, 1], [0, -100])
     const y2 = useTransform(scrollYProgress, [0, 1], [0, 50])
     const rotation = useTransform(scrollYProgress, [0, 1], [0, 360])
-
-    // Render skill rating
-    const renderSkillRating = (level: number) => {
-        return (
-            <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                    <ThumbsUp key={i} size={16} className={`${i < level ? "text-yellow-400" : "text-gray-600 opacity-30"}`} />
-                ))}
-            </div>
-        )
-    }
 
     // Handle project click
     const handleProjectClick = (projectId: string) => {
@@ -379,13 +369,24 @@ export default function ProgrammerPortfolio() {
         },
     ]
 
-    // Find selected project data
-    const selectedProjectData = projects.find((project) => project.id === selectedProject)
+    // Initialize terminal and set up interval for cursor blinking
+    useEffect(() => {
+        setTerminalLines(["Welcome to the interactive terminal!", "Type 'help' to get started."])
+        setIsTerminalReady(true)
 
-    // If project is selected, show detail view
-    if (selectedProject && selectedProjectData) {
-        return <ProjectDetail project={selectedProjectData} onBack={handleBackFromDetail} />
-    }
+        const newIntervalId = setInterval(() => {
+            setCurrentTime(new Date())
+            setTerminalCursor((prev) => !prev)
+        }, 500)
+
+        setIntervalId(newIntervalId)
+
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId)
+            }
+        }
+    }, [intervalId])
 
     const handleTerminalSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -416,17 +417,13 @@ export default function ProgrammerPortfolio() {
         }
     }
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setCurrentTime(new Date())
-            setTerminalCursor((prev) => !prev)
-        }, 500)
+    // Find selected project data
+    const selectedProjectData = projects.find((project) => project.id === selectedProject)
 
-        setTerminalLines(["Welcome to the interactive terminal!", "Type 'help' to get started."])
-        setIsTerminalReady(true)
-
-        return () => clearInterval(intervalId)
-    }, [])
+    // If project is selected, show detail view
+    if (selectedProject && selectedProjectData) {
+        return <ProgrammingProjectDetail project={selectedProjectData} onBack={handleBackFromDetail} />
+    }
 
     return (
         <motion.div
@@ -464,19 +461,6 @@ export default function ProgrammerPortfolio() {
                     }}
                 >
                     <div className="text-black font-bold text-xs">👟</div>
-                </motion.div>
-
-                {/* Graffiti Tag */}
-                <motion.div
-                    className="absolute top-1/3 left-10 text-yellow-400 font-black text-2xl transform -rotate-12"
-                    animate={{
-                        scale: [1, 1.1, 1],
-                        opacity: [0.7, 1, 0.7],
-                        rotate: [-12, -8, -12],
-                    }}
-                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-                >
-                    FRESH
                 </motion.div>
 
                 {/* Moving Skateboard */}
@@ -614,7 +598,7 @@ export default function ProgrammerPortfolio() {
                         ease: "easeInOut",
                     }}
                 >
-                    DOPE
+                    MLEM
                 </motion.div>
 
                 <motion.div
@@ -630,7 +614,7 @@ export default function ProgrammerPortfolio() {
                         delay: 1,
                     }}
                 >
-                    SICK
+                    POW
                 </motion.div>
             </div>
 
@@ -727,53 +711,10 @@ export default function ProgrammerPortfolio() {
                                             <div className="w-full h-full border-4 border-black rounded-full border-t-yellow-400 border-r-yellow-400" />
                                         </motion.div>
                                     </div>
-
-                                    {/* Comic Elements */}
-                                    <motion.div className="absolute -top-6 -right-6 bg-yellow-400 text-black p-2 transform rotate-12 border-2 border-black">
-                                        <span className="font-bold text-lg">TA-DA!</span>
-                                    </motion.div>
                                 </div>
 
                                 {/* Stats */}
-                                <div className="mt-8 space-y-4">
-                                    <div className="bg-black p-4">
-                                        <div className="flex justify-between items-center">
-                                            <div className="text-yellow-400 font-bold">CODING SKILLS:</div>
-                                            <div className="flex">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <ThumbsUp key={i} size={16} className={`${i < 5 ? "text-yellow-400" : "text-gray-600"}`} />
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="text-emerald-500 text-sm mt-1">
-                                            (Fluent in 10+ programming languages and frameworks)
-                                        </div>
-                                    </div>
-
-                                    <div className="bg-black p-4">
-                                        <div className="flex justify-between items-center">
-                                            <div className="text-yellow-400 font-bold">PROBLEM SOLVING:</div>
-                                            <div className="flex">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <ThumbsUp key={i} size={16} className={`${i < 4 ? "text-yellow-400" : "text-gray-600"}`} />
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="text-emerald-500 text-sm mt-1">(Tackles complex challenges with ease)</div>
-                                    </div>
-
-                                    <div className="bg-black p-4">
-                                        <div className="flex justify-between items-center">
-                                            <div className="text-yellow-400 font-bold">CREATIVITY:</div>
-                                            <div className="flex">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <ThumbsUp key={i} size={16} className={`${i < 5 ? "text-yellow-400" : "text-gray-600"}`} />
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="text-emerald-500 text-sm mt-1">(Thinks outside the conventional box)</div>
-                                    </div>
-                                </div>
+                                <div className="mt-8 space-y-4"></div>
                             </div>
                         </motion.div>
                     </div>
@@ -805,10 +746,7 @@ export default function ProgrammerPortfolio() {
                         }}
                     >
                         <span className="text-black font-black text-2xl md:text-4xl tracking-wider">
-                            ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE ★ BRUTALISM MEETS STREETWEAR ★ CODE WITH ATTITUDE ★
-                            FRESH DESIGNS ONLY ★ KEEP IT REAL ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE ★ BRUTALISM MEETS
-                            STREETWEAR ★ CODE WITH ATTITUDE ★ FRESH DESIGNS ONLY ★ KEEP IT REAL ★ NO PIXELS WERE HARMED IN THE MAKING
-                            OF THIS SITE ★ BRUTALISM MEETS STREETWEAR ★ CODE WITH ATTITUDE ★ FRESH DESIGNS ONLY ★ KEEP IT REAL ★
+                            ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE ★ NO PIXELS WERE HARMED IN THE MAKING OF THIS SITE
                         </span>
                     </motion.div>
                 </motion.div>
@@ -934,14 +872,14 @@ export default function ProgrammerPortfolio() {
                                                 project.images.find((img) => img.type === "cover")?.url ||
                                                 project.images[0]?.url ||
                                                 "/placeholder.svg?height=300&width=500&text=Placeholder" ||
+                                                "/placeholder.svg" ||
+                                                "/placeholder.svg" ||
+                                                "/placeholder.svg" ||
                                                 "/placeholder.svg"
                                             }
                                             alt={project.title}
                                             className="w-full h-48 object-cover border-2 border-yellow-400"
                                         />
-                                        <motion.div className="absolute top-6 right-6 bg-yellow-400 text-black p-2 transform rotate-12 border-2 border-black">
-                                            <span className="font-bold text-sm">HOT!</span>
-                                        </motion.div>
                                     </div>
 
                                     {/* Description */}
@@ -951,47 +889,6 @@ export default function ProgrammerPortfolio() {
                                     </div>
 
                                     {/* Stats */}
-                                    <div className="bg-black p-4 border-2 border-yellow-400 transform -rotate-1">
-                                        <h4 className="text-yellow-400 font-bold text-lg mb-4 border-b-2 border-yellow-400 pb-2">
-                                            PROJECT STATS
-                                        </h4>
-
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                                <div className="text-emerald-500 font-bold mb-1 text-sm">CODING:</div>
-                                                {renderSkillRating(project.skills.coding)}
-                                            </div>
-
-                                            <div>
-                                                <div className="text-emerald-500 font-bold mb-1 text-sm">DESIGN:</div>
-                                                {renderSkillRating(project.skills.design)}
-                                            </div>
-
-                                            <div>
-                                                <div className="text-emerald-500 font-bold mb-1 text-sm">COMPLEXITY:</div>
-                                                {renderSkillRating(project.skills.complexity)}
-                                            </div>
-
-                                            <div>
-                                                <div className="text-emerald-500 font-bold mb-1 text-sm">INNOVATION:</div>
-                                                {renderSkillRating(project.skills.innovation)}
-                                            </div>
-                                        </div>
-
-                                        <div className="mt-4 flex justify-between">
-                                            <div className="bg-emerald-700 text-white px-2 py-1 text-xs font-bold border border-white">
-                                                {project.year}
-                                            </div>
-                                            <div
-                                                className={`px-2 py-1 text-xs font-bold border ${project.status === "LIVE"
-                                                        ? "bg-green-500 text-black border-black"
-                                                        : "bg-yellow-400 text-black border-black"
-                                                    }`}
-                                            >
-                                                {project.status}
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     {/* Tech Stack */}
                                     <div className="bg-yellow-400 p-4 border-2 border-black transform rotate-1">
@@ -1041,20 +938,6 @@ export default function ProgrammerPortfolio() {
                                         CLICK TO VIEW FULL PROJECT DETAILS!
                                     </div>
                                 </div>
-
-                                {/* Comic-style Decorations */}
-                                <AnimatePresence>
-                                    {project.id === "01" && (
-                                        <motion.div
-                                            className="absolute top-4 right-4 bg-yellow-400 text-black p-2 transform rotate-12 border-4 border-black z-10"
-                                            initial={{ scale: 0, rotate: 0 }}
-                                            animate={{ scale: 1, rotate: 12 }}
-                                            exit={{ scale: 0, rotate: 0 }}
-                                        >
-                                            <span className="font-black text-sm">NEW!</span>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
                             </motion.div>
                         ))}
                     </div>
@@ -1102,74 +985,6 @@ export default function ProgrammerPortfolio() {
                         </div>
 
                         {/* Right Column */}
-                        <div>
-                            <div className="bg-yellow-400 border-4 border-black p-8 transform rotate-2">
-                                <h3 className="text-3xl font-black text-black mb-6">SKILLS & POWERS</h3>
-
-                                <div className="space-y-6">
-                                    <div>
-                                        <div className="flex justify-between items-center mb-2">
-                                            <div className="font-bold text-lg">FRONTEND DEVELOPMENT</div>
-                                            <div className="flex">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <Star key={i} size={16} className={`${i < 5 ? "text-black" : "text-gray-600"}`} />
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="bg-black h-4 w-full">
-                                            <div className="bg-emerald-700 h-full" style={{ width: "95%" }} />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div className="flex justify-between items-center mb-2">
-                                            <div className="font-bold text-lg">BACKEND SYSTEMS</div>
-                                            <div className="flex">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <Star key={i} size={16} className={`${i < 4 ? "text-black" : "text-gray-600"}`} />
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="bg-black h-4 w-full">
-                                            <div className="bg-emerald-700 h-full" style={{ width: "85%" }} />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div className="flex justify-between items-center mb-2">
-                                            <div className="font-bold text-lg">UI/UX DESIGN</div>
-                                            <div className="flex">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <Star key={i} size={16} className={`${i < 4 ? "text-black" : "text-gray-600"}`} />
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="bg-black h-4 w-full">
-                                            <div className="bg-emerald-700 h-full" style={{ width: "80%" }} />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div className="flex justify-between items-center mb-2">
-                                            <div className="font-bold text-lg">DEVOPS & DEPLOYMENT</div>
-                                            <div className="flex">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <Star key={i} size={16} className={`${i < 3 ? "text-black" : "text-gray-600"}`} />
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="bg-black h-4 w-full">
-                                            <div className="bg-emerald-700 h-full" style={{ width: "70%" }} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Comic Element */}
-                            <motion.div className="absolute -bottom-10 -right-10 bg-white text-black p-4 transform rotate-12 border-4 border-black">
-                                <span className="font-black text-2xl">HIRE ME!</span>
-                            </motion.div>
-                        </div>
                     </motion.div>
                 </div>
             </section>
