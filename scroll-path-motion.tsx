@@ -6,23 +6,14 @@ import { motion, useScroll, useTransform } from "framer-motion"
 export default function Component() {
   const containerRef = useRef<HTMLDivElement>(null)
 
-  // Track scroll progress within the container
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   })
-
-  // Transform scroll progress to path progress (0 to 1)
   const pathProgress = useTransform(scrollYProgress, [0, 1], [0, 1])
-
-  // Create transforms for the animated element position
   const x = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 200, 0, -200, 0])
   const y = useTransform(scrollYProgress, [0, 1], [0, 1200])
-
-  // Rotation based on scroll for extra visual effect
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 720])
-
-  // SVG path for the swirling motion (spiral going down)
   const spiralPath =
     "M 200 50 Q 350 150 200 250 Q 50 350 200 450 Q 350 550 200 650 Q 50 750 200 850 Q 350 950 200 1050 Q 50 1150 200 1250"
 

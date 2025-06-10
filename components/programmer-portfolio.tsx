@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useState, useEffect, useRef } from "react"
 import { Github, ExternalLink, Zap, Terminal, Code, Cpu } from "lucide-react"
 import ProgrammingProjectDetail from "./programming-project-detail"
+import ScrollVelocity from "@/app/blocks/TextAnimations/ScrollVelocity/ScrollVelocity"
 
 export default function ProgrammerPortfolio() {
     const [currentTime, setCurrentTime] = useState(new Date())
@@ -629,7 +630,7 @@ export default function ProgrammerPortfolio() {
                         >
                             <Cpu className="text-yellow-400" size={20} />
                         </motion.div>
-                        <div className="text-xl font-bold tracking-wider">DEV-ZINE</div>
+                        <div className="text-md md:text-xl font-bold tracking-wider">AULIA RAMADHAN</div>
                     </div>
 
                     <div className="flex items-center space-x-4">
@@ -648,18 +649,18 @@ export default function ProgrammerPortfolio() {
                         {/* Left Column - Title */}
                         <div>
                             <motion.div
-                                className="bg-black p-8 transform -rotate-2"
+                                className="bg-black p-8 transform text-center -rotate-2"
                                 initial={{ x: -100, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ duration: 0.8 }}
                             >
-                                <motion.h1 className="text-8xl font-black text-yellow-400 leading-none tracking-tighter">
-                                    RAMA
+                                <motion.h1 className="text-4xl md:text-8xl font-black text-yellow-400 leading-none tracking-tighter">
+                                    AULIA RAMADHAN
                                 </motion.h1>
                             </motion.div>
 
                             {/* Speech Bubble */}
-                            <motion.div
+                            {/* <motion.div
                                 className="relative mt-12 bg-white border-4 border-black p-6 transform rotate-1"
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
@@ -673,7 +674,7 @@ export default function ProgrammerPortfolio() {
                                     <Zap className="text-yellow-400 mr-2" />
                                     <span className="text-sm font-bold">FULL-STACK DEVELOPER</span>
                                 </div>
-                            </motion.div>
+                            </motion.div> */}
                         </div>
 
                         {/* Right Column - Character */}
@@ -778,7 +779,7 @@ export default function ProgrammerPortfolio() {
                         <div className="bg-emerald-700 p-3 flex items-center justify-between border-b-4 border-yellow-400">
                             <div className="flex items-center space-x-2">
                                 <Terminal size={18} className="text-yellow-400" />
-                                <span className="text-yellow-400 font-bold">terminal@RAMA:~</span>
+                                <span className="text-yellow-400 font-bold">terminal@NULL:~</span>
                             </div>
                             <div className="flex space-x-2">
                                 <div className="w-3 h-3 bg-red-500 rounded-full" />
